@@ -1,0 +1,12 @@
+## Interface: 30200
+## Title: WelTo
+## Notes: Say Hello to Comer
+## Version: 2.0
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+
+libs\LibWho-2.0.lua
+
+core.lua
+text.lua
