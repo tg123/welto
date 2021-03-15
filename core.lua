@@ -8,34 +8,12 @@
 
 -- 自定义欢迎文本表
 local welcomeText = {
-	'你好啊，%name，你一定是一个厉害的%class吧',
-	'嗨！我们又多了一位%class朋友，大家欢迎%name。',
-	'听说加入%guild后%name再也不是移动荣誉了……',
-	'纳鲁没有忘记%name，指引他来到%guild。',
-	'%name你是来帮我我们打败燃烧军团的吧！',
-	'%name上个月你就%level吧怎么还%level阿？',
-	'花儿对你笑，%name，我代表花儿欢迎你。',
-	'听到家乡的声音了么%name。',
-	'%name听起来像个%class',
-	'%name，听起来很好吃啊……',
-	'%name，你是不是美女阿？',
-	'欢迎来到%guild，我们这个面包由依然平淡提供。',
-	'作为%class，%name你一定知道怎么制造灭团的~',
-	'欢迎来到%guild，这里就是你的家，拿着这个炉石，%name，它是给你的。'
+	'你好啊，%s，你一定是一个厉害的玩家吧',
+	'嗨！我们又多了一位朋友，大家欢迎%s。',
 }
 -- 随机读取欢迎语函数
 local function RandomWelcomeText()
 	return welcomeText[math.random(table.getn(welcomeText))]
-end
---替换随机欢迎语中的姓名、职业、等级并广播到公会频道函数
-local function Broadcast(name, level, class, guild)
-	local s = RandomWelcomeText()
-	s = string.gsub(s, '%%level', level)
-	s = string.gsub(s, '%%name', name)
-	s = string.gsub(s, '%%guild', guild)
-	s = string.gsub(s, '%%class', class)
-
-	SendChatMessage(s, 'GUILD')
 end
 
 do
@@ -52,7 +30,7 @@ do
 					C_Timer.After(
 						random(1000) / 1000,
 						function()
-							SendChatMessage(('欢迎%s加入公会！'):format(name), 'GUILD')
+							SendChatMessage((RandomWelcomeText):format(name), 'GUILD')
 						end
 					)
 				end
@@ -60,6 +38,18 @@ do
 		end
 	)
 end
+
+--[[替换随机欢迎语中的姓名、职业、等级并广播到公会频道函数
+local function Broadcast(name, level, class, guild)
+	local s = RandomWelcomeText()
+	s = string.gsub(s, '%%level', level)
+	s = string.gsub(s, '%%name', name)
+	s = string.gsub(s, '%%guild', guild)
+	s = string.gsub(s, '%%class', class)
+
+	SendChatMessage(s, 'GUILD')
+end
+]]--
 
 -- 在指定事件发生时广播随机欢迎语，插件核心
 local guild
