@@ -7,37 +7,7 @@
 ]] --
 
 -- 自定义欢迎文本表
-local welcomeText = {
-	'你好啊，%s，你一定是一个厉害的玩家吧',
-	'嗨！我们又多了一位朋友，大家欢迎%s。',
-}
--- 随机读取欢迎语函数
-local function RandomWelcomeText()
-	return welcomeText[math.random(table.getn(welcomeText))]
-end
 
-do
-	local f = CreateFrame('Frame')
-	local str = GUILDEVENT_TYPE_JOIN:gsub('%%s', '')
-	f:RegisterEvent('CHAT_MSG_SYSTEM')
-	f:SetScript(
-		'OnEvent',
-		function(self, event, msg)
-			if msg:find(str) then
-				local name = msg:gsub(str, '')
-				name = Ambiguate(name, 'guild')
-				if not UnitIsUnit(name, 'player') then
-					C_Timer.After(
-						random(1000) / 1000,
-						function()
-							SendChatMessage((RandomWelcomeText):format(name), 'GUILD')
-						end
-					)
-				end
-			end
-		end
-	)
-end
 
 --[[替换随机欢迎语中的姓名、职业、等级并广播到公会频道函数
 local function Broadcast(name, level, class, guild)
